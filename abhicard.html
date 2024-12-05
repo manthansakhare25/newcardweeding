@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f8f4f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Flower animation */
+        .flower {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #ff69b4;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .screen {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #8B0000;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #b8336a, #7f1d5d);
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        input {
+            font-size: 1.2rem;
+            padding: 10px;
+            margin-top: 20px;
+            border: 2px solid #b8336a;
+            border-radius: 10px;
+            width: 80%;
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #5a0214;
+            margin: 20px 0;
+        }
+
+        .couple-name {
+            font-size: 2rem;
+            color: #8B0000;
+            margin: 10px 0;
+        }
+
+        .emoji {
+            font-size: 3rem;
+        }
+
+        .thank-you-message {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .invitation-text {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            color: #5a0214;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Greeting Screen -->
+    <div class="screen active" id="greetingScreen">
+        <h1>🌸 Welcome to Our Wedding Invitation! 🌸</h1>
+        <button class="button" onclick="showScreen('nameInputScreen')">Join the Celebration!</button>
+    </div>
+
+    <!-- Name Input Screen -->
+    <div class="screen" id="nameInputScreen">
+        <h1>Please enter your name:</h1>
+        <input type="text" id="userName" placeholder="Your Name">
+        <button class="button" onclick="showScreen('weddingCard')">View Invitation</button>
+    </div>
+
+    <!-- Wedding Card Screen -->
+    <div class="screen" id="weddingCard">
+        <div class="emoji">👰 🤵</div>
+        <h1>Wedding Invitation</h1>
+        <div class="name" id="guestName"></div>
+        <div class="couple-name">ABHINANDAN & BONISA</div>
+        <p class="invitation-text">"Two souls, one journey. Join us as we celebrate the beginning of our forever."</p>
+        <p>Venue: Nakshatra Lawn, Nagpur</p>
+        <p>Date: 25th December 2024</p>
+        <button class="button" onclick="showScreen('thankYouScreen')">Yes, I'll be there!</button>
+    </div>
+
+    <!-- Thank You Screen -->
+    <div class="screen" id="thankYouScreen">
+        <h1 class="thank-you-message">Thank you for accepting our invitation!</h1>
+        <p>We can't wait to share this special day with you.</p>
+        <button class="button" onclick="showScreen('greetingScreen')">Close</button>
+    </div>
+
+    <!-- Floating Flowers -->
+    <script>
+        // Function to create floating flowers
+        function createFlowers() {
+            const numFlowers = 20;
+            for (let i = 0; i < numFlowers; i++) {
+                const flower = document.createElement('div');
+                flower.innerText = '🌸';
+                flower.classList.add('flower');
+                flower.style.left = `${Math.random() * 100}vw`;
+                flower.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                flower.style.opacity = Math.random();
+                document.body.appendChild(flower);
+            }
+        }
+
+        createFlowers();
+
+        // Function to show specific screens
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+
+            // Set the guest name on the card
+            if (screenId === 'weddingCard') {
+                const name = document.getElementById('userName').value;
+                document.getElementById('guestName').innerText = `Dear ${name},`;
+            }
+        }
+    </script>
+
+</body>
+</html>
